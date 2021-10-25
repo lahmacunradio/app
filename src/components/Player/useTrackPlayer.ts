@@ -9,7 +9,7 @@ import {
   DEFAULT_TRACK,
   RADIO_CAPABILITIES,
   SHOW_CAPABILITES
-} from '@util/constants';
+} from '../../util/constants';
 import { NowPlayingMetadata, NowPlayingState, PLAYING_STATES } from './types';
 
 export const useTrackPlayer = () => {
@@ -92,16 +92,12 @@ export const useTrackPlayer = () => {
 
   const handlePlay = useCallback(
     async (nowPlayingState: NowPlayingState) => {
-      await getNowPlayingMetadata();
-      console.log('isplaying, ', isPlaying);
+      await fetchNowPlayingMetadata();
       if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_RADIO) {
-        console.log('destroy');
         await resetPlayer();
       } else if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_SHOW) {
-        console.log('readio pause');
         await TrackPlayer.pause();
       } else {
-        console.log('simple play');
         await TrackPlayer.play();
       }
       await setState();
@@ -109,7 +105,7 @@ export const useTrackPlayer = () => {
     [isPlaying, resetPlayer, setState]
   );
 
-  const getNowPlayingMetadata = async () => {
+  const fetchNowPlayingMetadata = async () => {
     const resp = await fetch('https://streaming.lahmacun.hu/api/nowplaying/1');
     const json = await resp.json();
     setNowPlayingMetadata(json);
@@ -117,7 +113,7 @@ export const useTrackPlayer = () => {
 
   useEffect(() => {
     async function get() {
-      await getNowPlayingMetadata();
+      await fetchNowPlayingMetadata();
     }
     get();
   }, []);
@@ -127,7 +123,6 @@ export const useTrackPlayer = () => {
       event: { [key: string]: any; type: Event },
       state: NowPlayingState
     ) => {
-      console.log(state);
       if (event.type === Event.RemoteStop) {
         await resetPlayer();
         setIsPlaying(false);
@@ -135,10 +130,8 @@ export const useTrackPlayer = () => {
 
       if (event.type === Event.RemotePause) {
         if (state === PLAYING_STATES.STATE_RADIO) {
-          console.log('radio destroy');
           await resetPlayer();
         } else if (state === PLAYING_STATES.STATE_SHOW) {
-          console.log('ep pause');
           await TrackPlayer.pause();
         }
       }
@@ -150,13 +143,11 @@ export const useTrackPlayer = () => {
         await TrackPlayer.play();
       }
       if (event.type === Event.RemoteSeek) {
-        console.log(event.position);
         await TrackPlayer.pause();
         await TrackPlayer.seekTo(Math.floor(event.position));
         await TrackPlayer.play();
       }
       await setState();
-      console.log('eventtype', event.type);
     },
     [loadTrack, resetPlayer, setState]
   );

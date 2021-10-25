@@ -17,6 +17,7 @@ export const Arcsi = (props: NativeStackScreenProps<any>) => {
 
   return (
     <View style={styles.wrapper}>
+      {/* TODO: Loading GIF/something */}
       {(isLoading || !shows) && <Text>{'Loading...'}</Text>}
       <ScrollView contentContainerStyle={styles.showItemWrapper}>
         {shows &&

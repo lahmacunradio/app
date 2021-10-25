@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { PLAYING_STATES } from '../Player/types';
 import { UseShowEpisodeProps } from './types';
-// import TrackPlayer from 'react-native-track-player';
 
 export const useShowEpisode = (props: UseShowEpisodeProps) => {
   const { canonizedCoverUrl, id, name, showName, handlePlay, loadTrack } =
