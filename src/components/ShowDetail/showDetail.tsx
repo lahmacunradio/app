@@ -3,7 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../types/routeTypes';
 import { ShowEpisode } from '../ShowEpisode';
-import { LAHMACUN_PURPLE } from '@util/constants';
+import { LAHMACUN_PURPLE } from '../../util/constants';
 
 export const ShowDetail = (
   props: NativeStackScreenProps<StackParamList, 'Shows'>

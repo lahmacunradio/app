@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { PlayerProps, PLAYING_STATES } from './types';
-import { RADIO_CAPABILITIES } from '@util/constants';
+import { RADIO_CAPABILITIES } from '../../util/constants';
 import TrackPlayer from 'react-native-track-player';
 
 export const Player: React.FC<PlayerProps> = (

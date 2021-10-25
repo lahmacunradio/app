@@ -9,7 +9,7 @@ export const ShowEpisode = (
 ) => {
   const { description, image_url, name, id } = props.item;
   const { cover_image_url, name: showName } = props.show;
-  // TODO szerezni canonical URL-t
+  // TODO get the canonical URL from backend
   const canonizedCoverUrl = useMemo(() => {
     const parts = cover_image_url.split('/');
     return `https://media.lahmacun.hu/${parts[3]}/${image_url}`;
@@ -30,7 +30,7 @@ export const ShowEpisode = (
     <View style={styles.wrapper}>
       <Image style={styles.coverImage} source={{ uri: canonizedCoverUrl }} />
       <Text>{name}</Text>
-      <Text style={{ maxWidth: 150 }}>{description}</Text>
+      <Text style={styles.episodeDescription}>{description}</Text>
       <Button title={'Play'} onPress={async () => await onPlayClick()} />
     </View>
   );
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    // width: '100%',
+    width: '100%',
     alignItems: 'flex-start'
   },
   coverImage: {
@@ -50,8 +50,10 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     display: 'flex',
-    // height: '100%',
     flexDirection: 'column',
     justifyContent: 'space-between'
+  },
+  episodeDescription: {
+    maxWidth: 150
   }
 });

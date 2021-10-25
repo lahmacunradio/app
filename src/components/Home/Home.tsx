@@ -6,14 +6,13 @@ export const Home = () => {
   const { isPlaying, handlePlay, loadTrack, nowPlayingMetadata } =
     useTrackPlayer();
 
+  // TODO: upcoming shows
   return (
     <View>
       <Player {...{ isPlaying, handlePlay, loadTrack }} />
       <View style={styles.nowPlayingWrapper}>
         <Text>NOW PLAYING</Text>
         <Text>{`${nowPlayingMetadata?.now_playing.song.artist} - ${nowPlayingMetadata?.now_playing.song.title}`}</Text>
-        <Text>NEXT UP</Text>
-        <Text>{`${nowPlayingMetadata?.playing_next.song.artist} - ${nowPlayingMetadata?.playing_next.song.title}`}</Text>
       </View>
     </View>
   );
