@@ -1,9 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import {
+  Image,
   ScrollView,
   StyleSheet,
-  Text,
   useWindowDimensions,
   View
 } from 'react-native';
@@ -17,8 +17,9 @@ export const Arcsi = (props: NativeStackScreenProps<any>) => {
 
   return (
     <View style={styles.wrapper}>
-      {/* TODO: Loading GIF/something */}
-      {(isLoading || !shows) && <Text>{'Loading...'}</Text>}
+      {(isLoading || !shows) && (
+        <Image source={require('@assets/img/preload_text.png')} />
+      )}
       <ScrollView contentContainerStyle={styles.showItemWrapper}>
         {shows &&
           shows.map((show, index) => (

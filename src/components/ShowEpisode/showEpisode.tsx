@@ -17,7 +17,7 @@ export const ShowEpisode = (
 
   const { loadTrack, handlePlay } = useTrackPlayer();
 
-  const { onPlayClick } = useShowEpisode({
+  const { onPlayClick, isPlaying } = useShowEpisode({
     id,
     canonizedCoverUrl,
     name,
@@ -31,7 +31,10 @@ export const ShowEpisode = (
       <Image style={styles.coverImage} source={{ uri: canonizedCoverUrl }} />
       <Text>{name}</Text>
       <Text style={styles.episodeDescription}>{description}</Text>
-      <Button title={'Play'} onPress={async () => await onPlayClick()} />
+      <Button
+        title={isPlaying ? 'Pause' : 'Play'}
+        onPress={async () => await onPlayClick()}
+      />
     </View>
   );
 };

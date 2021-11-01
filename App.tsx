@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
 
 import { Home } from './src/components/Home';
 import { Arcsi } from './src/components/Arcsi';
@@ -28,18 +29,20 @@ const App: () => ReactNode = () => {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <SafeAreaView>
-          <View style={styles.scrollView}>
-            <Stack.Navigator screenOptions={{ headerShown: true }}>
-              <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="Shows" component={ShowDetail} />
-            </Stack.Navigator>
-          </View>
-        </SafeAreaView>
-      </NavigationContainer>
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <SafeAreaView>
+            <View style={styles.scrollView}>
+              <Stack.Navigator screenOptions={{ headerShown: true }}>
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen name="Shows" component={ShowDetail} />
+              </Stack.Navigator>
+            </View>
+          </SafeAreaView>
+        </NavigationContainer>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 
