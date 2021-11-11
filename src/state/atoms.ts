@@ -2,7 +2,7 @@ import { PLAYING_STATES } from '@components/Player/types';
 import { atom } from 'recoil';
 import { NowPlayingStateType } from './types';
 
-export const nowPlayingState = atom<NowPlayingStateType>({
+export const nowPlayingAtom = atom<NowPlayingStateType>({
   key: 'nowPlayingState',
   default: {
     url: '',

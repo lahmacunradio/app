@@ -17,7 +17,7 @@ export const ShowEpisode = (
 
   const { loadTrack, handlePlay } = useTrackPlayer();
 
-  const { onPlayClick, isPlaying } = useShowEpisode({
+  const { onPlayClick } = useShowEpisode({
     id,
     canonizedCoverUrl,
     name,

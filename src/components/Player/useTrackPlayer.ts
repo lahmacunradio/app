@@ -1,10 +1,12 @@
+import { getIsPlaying } from '@util/getPlayingState';
 import { useCallback, useEffect, useState } from 'react';
 import TrackPlayer, {
   Track,
   useTrackPlayerEvents,
-  Event,
-  State
+  Event
 } from 'react-native-track-player';
+import { useSetRecoilState } from 'recoil';
+import { nowPlayingAtom } from 'src/state/atoms';
 import {
   DEFAULT_TRACK,
   RADIO_CAPABILITIES,
@@ -16,6 +18,8 @@ export const useTrackPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [nowPlayingMetadata, setNowPlayingMetadata] =
     useState<NowPlayingMetadata>();
+  const setNowPlayingState = useSetRecoilState(nowPlayingAtom);
+  // const ads = useReco
 
   useTrackPlayerEvents(
     [Event.RemotePlay, Event.RemotePause, Event.RemoteStop, Event.RemoteSeek],
@@ -45,17 +49,20 @@ export const useTrackPlayer = () => {
           title: nowPlayingMetadata?.now_playing.song.title,
           artwork: nowPlayingMetadata?.now_playing.song.art
         });
+        setNowPlayingState({ url: String(DEFAULT_TRACK.url) });
       } else {
         await TrackPlayer.updateOptions({
           capabilities: SHOW_CAPABILITES
         });
         await TrackPlayer.add(track);
+        setNowPlayingState({ url: String(track.url) });
       }
     },
     [
       nowPlayingMetadata?.now_playing.song.art,
       nowPlayingMetadata?.now_playing.song.artist,
-      nowPlayingMetadata?.now_playing.song.title
+      nowPlayingMetadata?.now_playing.song.title,
+      setNowPlayingState
     ]
   );
 
@@ -79,16 +86,19 @@ export const useTrackPlayer = () => {
     await setup();
   }, []);
 
-  const setState = useCallback(async () => {
-    const state = await TrackPlayer.getState();
-    // TODO: playing states may differ between platforms?
-    setIsPlaying(
-      (state as unknown) === State.Playing ||
-        (state as unknown) === State.Buffering ||
-        (state as unknown) === 'loading' ||
-        (state as unknown) === State.Connecting
-    );
-  }, [setIsPlaying]);
+  const setState = useCallback(
+    async (playerState: NowPlayingState) => {
+      const state = await TrackPlayer.getState();
+      const isPlayingState = getIsPlaying(state);
+      // TODO: playing states may differ between platforms?
+      setIsPlaying(isPlayingState);
+      setNowPlayingState({
+        isPlaying: isPlayingState,
+        nowPlayingState: playerState
+      });
+    },
+    [setNowPlayingState]
+  );
 
   const handlePlay = useCallback(
     async (nowPlayingState: NowPlayingState) => {
@@ -100,7 +110,7 @@ export const useTrackPlayer = () => {
       } else {
         await TrackPlayer.play();
       }
-      await setState();
+      await setState(nowPlayingState);
     },
     [isPlaying, resetPlayer, setState]
   );
@@ -147,7 +157,7 @@ export const useTrackPlayer = () => {
         await TrackPlayer.seekTo(Math.floor(event.position));
         await TrackPlayer.play();
       }
-      await setState();
+      await setState(state);
     },
     [loadTrack, resetPlayer, setState]
   );

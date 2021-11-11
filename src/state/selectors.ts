@@ -1,14 +1,14 @@
 import { PLAYING_STATES } from '@components/Player/types';
 import { DEFAULT_TRACK } from '@util/constants';
 import { selector } from 'recoil';
-import { nowPlayingState } from './atoms';
+import { nowPlayingAtom } from './atoms';
 import TrackPlayer from 'react-native-track-player';
 import { getIsPlaying } from '@util/getPlayingState';
 
 export const getNowPlayingState = selector({
   key: 'getNowPlayingState',
   get: async ({ get }) => {
-    const { url } = get(nowPlayingState);
+    const { url } = get(nowPlayingAtom);
     const state = await TrackPlayer.getState();
     return {
       url,
@@ -19,7 +19,8 @@ export const getNowPlayingState = selector({
       isPlaying: getIsPlaying(state)
     };
   },
-  set: ({ set }, newVal: any) => {
-    set(nowPlayingState, newVal);
+  set: ({ set, get }, newVal: any) => {
+    const state = get(nowPlayingAtom);
+    set(nowPlayingAtom, { ...state, ...newVal });
   }
 });
