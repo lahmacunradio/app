@@ -12,6 +12,7 @@ import { Home } from './src/components/Home';
 import { Arcsi } from './src/components/Arcsi';
 import { LAHMACUN_PURPLE } from './src/util/constants';
 import { ShowDetail } from './src/components/ShowDetail/showDetail';
+import { ShowEpisodeDetail } from './src/components/ShowEpisodeDetail/showEpisodeDetail';
 
 const App: () => ReactNode = () => {
   const Tab = createBottomTabNavigator();
@@ -33,8 +34,13 @@ const App: () => ReactNode = () => {
         <SafeAreaView>
           <View style={styles.scrollView}>
             <Stack.Navigator screenOptions={{ headerShown: true }}>
-              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen name="Shows" component={ShowDetail} />
+              <Stack.Screen name="Episode" component={ShowEpisodeDetail} />
             </Stack.Navigator>
           </View>
         </SafeAreaView>
