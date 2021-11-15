@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Image,
   StyleSheet,
@@ -13,34 +13,59 @@ export const ArcsiItem = (props: ShowItemProps) => {
   const styles = StyleSheet.create({
     coverImage: {
       width: width,
-      height: width
+      height: width,
+      maxHeight: 300,
+      overflow: 'hidden'
     },
     showItem: {
       display: 'flex',
       flexDirection: 'column',
-      marginBottom: 15
+      justifyContent: 'center',
+      marginBottom: 25,
+      paddingHorizontal: '15%'
     },
     showName: {
       maxWidth: width,
       flexWrap: 'wrap',
-      textAlign: 'center'
+      backgroundColor: 'white',
+      fontWeight: 'bold',
+      fontSize: 20,
+      marginBottom: 10
+    },
+    showDetails: {
+      fontFamily: 'Rubik',
+      backgroundColor: 'white',
+      padding: 20
     }
   });
+
+  const showDescription = useMemo(
+    () =>
+      show.description.length >= 300
+        ? show.description.slice(0, 300) + '...'
+        : show.description,
+    [show.description]
+  );
 
   return (
     <View style={styles.showItem}>
       <TouchableNativeFeedback
         onPress={() => props.nav.navigate('Shows', { show })}>
-        <Image
-          style={styles.coverImage}
-          source={{
-            uri: show.cover_image_url
-          }}
-        />
+        <View>
+          <Image
+            style={styles.coverImage}
+            source={{
+              uri: show.cover_image_url
+            }}
+          />
+          <View style={styles.showDetails}>
+            <Text style={styles.showName} adjustsFontSizeToFit>
+              {show.name}
+            </Text>
+            <Text>{showDescription}</Text>
+          </View>
+        </View>
       </TouchableNativeFeedback>
-      <Text style={styles.showName} adjustsFontSizeToFit>
-        {show.name}
-      </Text>
     </View>
   );
 };
