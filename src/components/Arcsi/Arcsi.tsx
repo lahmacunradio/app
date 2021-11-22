@@ -1,7 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,11 +18,9 @@ export const Arcsi = (props: NativeStackScreenProps<any>) => {
 
   return (
     <View style={styles.wrapper}>
-      {(isLoading || !shows) && (
-        <Image source={require('../../../assets/img/preload_text.png')} />
-      )}
-      <Text style={styles.title}>Lahmacun Shows</Text>
       <ScrollView contentContainerStyle={styles.showItemWrapper}>
+        <Text style={styles.title}>Lahmacun Shows</Text>
+        {(isLoading || !shows) && <Text>Loading...</Text>}
         {shows &&
           shows.map((show, index) => (
             <ArcsiItem
