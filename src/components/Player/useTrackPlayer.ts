@@ -11,6 +11,7 @@ import {
   SHOW_CAPABILITES
 } from '../../util/constants';
 import { NowPlayingMetadata, NowPlayingState, PLAYING_STATES } from './types';
+import { delay } from '../../util/delay';
 
 export const useTrackPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,36 +21,43 @@ export const useTrackPlayer = () => {
   useTrackPlayerEvents(
     [Event.RemotePlay, Event.RemotePause, Event.RemoteStop, Event.RemoteSeek],
     async event => {
-      const num = await TrackPlayer.getCurrentTrack();
-      const track = await TrackPlayer.getTrack(num);
-      console.log(track);
-      await handleRemoteEvent(
-        event,
-        track.url.toString() === DEFAULT_TRACK.url
-          ? PLAYING_STATES.STATE_RADIO
-          : PLAYING_STATES.STATE_SHOW
-      );
+      try {
+        const num = await TrackPlayer.getCurrentTrack();
+        const track = await TrackPlayer.getTrack(num);
+        await handleRemoteEvent(
+          event,
+          track.url.toString() === DEFAULT_TRACK.url
+            ? PLAYING_STATES.STATE_RADIO
+            : PLAYING_STATES.STATE_SHOW
+        );
+      } catch (e) {
+        console.log(e);
+      }
     }
   );
 
   const loadTrack = useCallback(
     async (track?: Track) => {
-      await TrackPlayer.reset();
-      if (!track) {
-        await TrackPlayer.updateOptions({
-          capabilities: RADIO_CAPABILITIES
-        });
-        await TrackPlayer.add({
-          ...DEFAULT_TRACK,
-          artist: nowPlayingMetadata?.now_playing.song.artist,
-          title: nowPlayingMetadata?.now_playing.song.title,
-          artwork: nowPlayingMetadata?.now_playing.song.art
-        });
-      } else {
-        await TrackPlayer.updateOptions({
-          capabilities: SHOW_CAPABILITES
-        });
-        await TrackPlayer.add(track);
+      try {
+        await TrackPlayer.reset();
+        if (!track) {
+          await TrackPlayer.updateOptions({
+            capabilities: RADIO_CAPABILITIES
+          });
+          await TrackPlayer.add({
+            ...DEFAULT_TRACK,
+            artist: nowPlayingMetadata?.now_playing.song.artist,
+            title: nowPlayingMetadata?.now_playing.song.title,
+            artwork: nowPlayingMetadata?.now_playing.song.art
+          });
+        } else {
+          await TrackPlayer.updateOptions({
+            capabilities: SHOW_CAPABILITES
+          });
+          await TrackPlayer.add(track);
+        }
+      } catch (e) {
+        console.log(e);
       }
     },
     [
@@ -75,40 +83,64 @@ export const useTrackPlayer = () => {
   };
 
   const resetPlayer = useCallback(async () => {
-    await TrackPlayer.destroy();
-    await setup();
+    try {
+      await TrackPlayer.destroy();
+      await setup();
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   const setState = useCallback(async () => {
+    await delay(1000);
     const state = await TrackPlayer.getState();
     // TODO: playing states may differ between platforms?
     setIsPlaying(
       (state as unknown) === State.Playing ||
         (state as unknown) === State.Buffering ||
         (state as unknown) === 'loading' ||
+        (state as unknown) === 'buffering' ||
         (state as unknown) === State.Connecting
     );
   }, [setIsPlaying]);
 
   const handlePlay = useCallback(
     async (nowPlayingState: NowPlayingState) => {
-      await fetchNowPlayingMetadata();
-      if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_RADIO) {
-        await resetPlayer();
-      } else if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_SHOW) {
-        await TrackPlayer.pause();
-      } else {
-        await TrackPlayer.play();
+      try {
+        await fetchNowPlayingMetadata();
+        if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_RADIO) {
+          console.log('radio reset');
+          await resetPlayer();
+        } else if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_SHOW) {
+          console.log('pause');
+          await TrackPlayer.pause();
+        } else {
+          console.log('play');
+          await TrackPlayer.play();
+        }
+        await setState();
+      } catch (e) {
+        console.log(e);
       }
-      await setState();
     },
     [isPlaying, resetPlayer, setState]
   );
 
   const fetchNowPlayingMetadata = async () => {
-    const resp = await fetch('https://streaming.lahmacun.hu/api/nowplaying/1');
-    const json = await resp.json();
-    setNowPlayingMetadata(json);
+    try {
+      const resp = await fetch(
+        'https://streaming.lahmacun.hu/api/nowplaying/1',
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            accept: 'application/json'
+          }
+        }
+      );
+      setNowPlayingMetadata(await resp.json());
+    } catch (e) {
+      console.log(JSON.stringify(e));
+    }
   };
 
   useEffect(() => {
