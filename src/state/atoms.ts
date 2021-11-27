@@ -1,8 +1,8 @@
-import { PLAYING_STATES } from '@components/Player/types';
+import { PLAYING_STATES } from '../components/Player/types';
 import { atom } from 'recoil';
 import { NowPlayingStateType } from './types';
 
-export const nowPlayingAtom = atom<NowPlayingStateType>({
+export const nowPlayingAtom = atom<Partial<NowPlayingStateType>>({
   key: 'nowPlayingState',
   default: {
     url: '',

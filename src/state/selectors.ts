@@ -1,9 +1,9 @@
-import { PLAYING_STATES } from '@components/Player/types';
-import { DEFAULT_TRACK } from '@util/constants';
+import { PLAYING_STATES } from '../components/Player/types';
+import { DEFAULT_TRACK } from '../util/constants';
 import { selector } from 'recoil';
 import { nowPlayingAtom } from './atoms';
 import TrackPlayer from 'react-native-track-player';
-import { getIsPlaying } from '@util/getPlayingState';
+import { getIsPlaying } from '../util/getPlayingState';
 
 export const getNowPlayingState = selector({
   key: 'getNowPlayingState',

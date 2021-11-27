@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { nowPlayingAtom } from '../../state/atoms';
 import { PLAYING_STATES } from '../Player/types';
 import { UseShowEpisodeProps } from './types';

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LAHMACUN_PURPLE } from '../../util/constants';
 import {
@@ -12,6 +12,9 @@ import {
 import { StackParamList } from '../../types/routeTypes';
 import { useShowEpisode } from '../ShowEpisode/useShowEpisode';
 import { useTrackPlayer } from '../Player/useTrackPlayer';
+import { useRecoilValue } from 'recoil';
+import { getNowPlayingState } from '../../state/selectors';
+import { NowPlayingStateType } from '../../state/types';
 
 export const ShowEpisodeDetail = (
   props: NativeStackScreenProps<StackParamList, 'Episode'>
@@ -33,6 +36,15 @@ export const ShowEpisodeDetail = (
     handlePlay
   });
 
+  const state = useRecoilValue<NowPlayingStateType>(getNowPlayingState);
+
+  const buttonTitle = useMemo(() => {
+    if (state.url !== url) {
+      return 'Play Episode';
+    }
+    return state.isPlaying ? 'Pause Episode' : 'Play Episode';
+  }, [state.isPlaying, state.url, url]);
+
   useEffect(
     () => props.navigation.setOptions({ title: name }),
     [name, props.navigation]
@@ -43,10 +55,7 @@ export const ShowEpisodeDetail = (
       <View style={styles.content}>
         <Image source={{ uri: url }} style={styles.coverImage} />
         <Text style={styles.episodeDescription}>{description}</Text>
-        <Button
-          title={'Play Episode'}
-          onPress={async () => await onPlayClick()}
-        />
+        <Button title={buttonTitle} onPress={async () => await onPlayClick()} />
       </View>
     </ScrollView>
   );

@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { ReactNode, Suspense } from 'react';
+import { StyleSheet, View, Image, Text } from 'react-native';
+import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator
@@ -14,6 +14,7 @@ import { Arcsi } from './src/components/Arcsi';
 import { LAHMACUN_PURPLE } from './src/util/constants';
 import { ShowDetail } from './src/components/ShowDetail/showDetail';
 import { ShowEpisodeDetail } from './src/components/ShowEpisodeDetail/showEpisodeDetail';
+import { StackParamList } from 'src/types/routeTypes';
 
 const App: () => ReactNode = () => {
   const Tab = createBottomTabNavigator();
@@ -42,7 +43,18 @@ const App: () => ReactNode = () => {
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen name="Shows" component={ShowDetail} />
-                <Stack.Screen name="Episode" component={ShowEpisodeDetail} />
+                <Stack.Screen name="Episode">
+                  {props => (
+                    <Suspense fallback={<Text>Loading...</Text>}>
+                      <ShowEpisodeDetail
+                        navigation={props.navigation}
+                        route={
+                          props.route as RouteProp<StackParamList, 'Episode'>
+                        }
+                      />
+                    </Suspense>
+                  )}
+                </Stack.Screen>
               </Stack.Navigator>
             </View>
           </View>

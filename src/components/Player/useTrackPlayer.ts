@@ -1,12 +1,12 @@
-import { getIsPlaying } from '@util/getPlayingState';
+import { getIsPlaying } from '../../util/getPlayingState';
 import { useCallback, useEffect, useState } from 'react';
 import TrackPlayer, {
   Track,
   useTrackPlayerEvents,
   Event
 } from 'react-native-track-player';
-import { useSetRecoilState } from 'recoil';
-import { nowPlayingAtom } from 'src/state/atoms';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { nowPlayingAtom } from '../../state/atoms';
 import {
   DEFAULT_TRACK,
   RADIO_CAPABILITIES,
@@ -20,7 +20,7 @@ export const useTrackPlayer = () => {
   const [nowPlayingMetadata, setNowPlayingMetadata] =
     useState<NowPlayingMetadata>();
   const setNowPlayingState = useSetRecoilState(nowPlayingAtom);
-  // const ads = useReco
+  const resetState = useResetRecoilState(nowPlayingAtom);
 
   useTrackPlayerEvents(
     [Event.RemotePlay, Event.RemotePause, Event.RemoteStop, Event.RemoteSeek],
@@ -56,7 +56,9 @@ export const useTrackPlayer = () => {
         setNowPlayingState({ url: String(DEFAULT_TRACK.url) });
       } else {
         await TrackPlayer.updateOptions({
-          capabilities: SHOW_CAPABILITES
+          capabilities: SHOW_CAPABILITES,
+          notificationCapabilities: SHOW_CAPABILITES,
+          compactCapabilities: SHOW_CAPABILITES
         });
         await TrackPlayer.add(track);
         setNowPlayingState({ url: String(track.url) });
@@ -78,6 +80,8 @@ export const useTrackPlayer = () => {
       });
       await TrackPlayer.updateOptions({
         capabilities: RADIO_CAPABILITIES,
+        notificationCapabilities: RADIO_CAPABILITIES,
+        compactCapabilities: RADIO_CAPABILITIES,
         stopWithApp: true
       });
     } catch (e) {
@@ -89,10 +93,11 @@ export const useTrackPlayer = () => {
     try {
       await TrackPlayer.destroy();
       await setup();
+      resetState();
     } catch (e) {
       console.log(e);
     }
-  }, []);
+  }, [resetState]);
 
   const setState = useCallback(
     async (playerState: NowPlayingState) => {
