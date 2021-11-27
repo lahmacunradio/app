@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { SafeAreaView, StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   BottomTabNavigationOptions,
@@ -31,7 +31,7 @@ const App: () => ReactNode = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <SafeAreaView>
+        <View>
           <View style={styles.scrollView}>
             <Stack.Navigator screenOptions={{ headerShown: true }}>
               <Stack.Screen
@@ -43,7 +43,7 @@ const App: () => ReactNode = () => {
               <Stack.Screen name="Episode" component={ShowEpisodeDetail} />
             </Stack.Navigator>
           </View>
-        </SafeAreaView>
+        </View>
       </NavigationContainer>
     </QueryClientProvider>
   );
@@ -78,6 +78,9 @@ const arcsiTabOptions: BottomTabNavigationOptions = {
 };
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+    paddingVertical: 15
+  },
   scrollView: {
     backgroundColor: LAHMACUN_PURPLE,
     height: '100%',
