@@ -20,7 +20,7 @@
     "react-native-eject": "^0.1.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
-    "react-native-track-player": "^2.1.0",
+    "react-native-track-player": "^2.1.2",
     "react-query": "^3.24.5",
     "recoil": "^0.4.1"
   },
