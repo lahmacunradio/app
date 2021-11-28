@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,13 +15,14 @@ export const Arcsi = (props: NativeStackScreenProps<any>) => {
   const { data: shows, isLoading } = useArcsi();
   const { width } = useWindowDimensions();
   const { navigation } = props;
-  useEffect(() => navigation.setOptions({ title: 'Shows' }), [navigation]);
 
   return (
     <View style={styles.wrapper}>
       <ScrollView contentContainerStyle={styles.showItemWrapper}>
         <Text style={styles.title}>Lahmacun Shows</Text>
-        {(isLoading || !shows) && <Text>Loading...</Text>}
+        {(isLoading || !shows) && (
+          <Image source={require('../../../assets/img/spinner.gif')} />
+        )}
         {shows &&
           shows.map((show, index) => (
             <ArcsiItem

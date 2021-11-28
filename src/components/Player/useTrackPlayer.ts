@@ -7,8 +7,8 @@ import TrackPlayer, {
 } from 'react-native-track-player';
 import {
   DEFAULT_TRACK,
-  RADIO_CAPABILITIES,
-  SHOW_CAPABILITES
+  groupedRadioCapabilities,
+  groupedShowCapabilities
 } from '../../util/constants';
 import { NowPlayingMetadata, NowPlayingState, PLAYING_STATES } from './types';
 import { delay } from '../../util/delay';
@@ -41,9 +41,7 @@ export const useTrackPlayer = () => {
       try {
         await TrackPlayer.reset();
         if (!track) {
-          await TrackPlayer.updateOptions({
-            capabilities: RADIO_CAPABILITIES
-          });
+          await TrackPlayer.updateOptions(groupedRadioCapabilities);
           await TrackPlayer.add({
             ...DEFAULT_TRACK,
             artist: nowPlayingMetadata?.now_playing.song.artist,
@@ -51,9 +49,7 @@ export const useTrackPlayer = () => {
             artwork: nowPlayingMetadata?.now_playing.song.art
           });
         } else {
-          await TrackPlayer.updateOptions({
-            capabilities: SHOW_CAPABILITES
-          });
+          await TrackPlayer.updateOptions(groupedShowCapabilities);
           await TrackPlayer.add(track);
         }
       } catch (e) {
@@ -74,7 +70,7 @@ export const useTrackPlayer = () => {
         waitForBuffer: true
       });
       await TrackPlayer.updateOptions({
-        capabilities: RADIO_CAPABILITIES,
+        ...groupedRadioCapabilities,
         stopWithApp: true
       });
     } catch (e) {

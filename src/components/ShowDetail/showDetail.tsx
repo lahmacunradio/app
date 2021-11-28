@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../types/routeTypes';
@@ -10,9 +10,23 @@ export const ShowDetail = (
 ) => {
   const { cover_image_url, description, name, items } = props.route.params.show;
 
-  useEffect(
-    () => props.navigation.setOptions({ title: name }),
-    [name, props.navigation]
+  useEffect(() => {
+    props.navigation.setOptions({ title: name });
+  }, [name, props.navigation, items]);
+
+  const orderedItems = useMemo(
+    () =>
+      items.sort((a, b) => {
+        const dateA = new Date(a.play_date).getTime();
+        const dateB = new Date(b.play_date).getTime();
+        if (dateA < dateB) {
+          return 1;
+        } else if (dateA > dateB) {
+          return -1;
+        }
+        return 0;
+      }),
+    [items]
   );
 
   return (
@@ -24,7 +38,7 @@ export const ShowDetail = (
         <Text style={styles.arcsived}>Arcsived Shows</Text>
         <View style={styles.separator} />
         <View style={styles.episodeWrapper}>
-          {items.map((item, index) => (
+          {orderedItems.map((item, index) => (
             <View style={styles.episodeContent} key={index}>
               <ShowEpisode item={item} show={props.route.params.show} />
             </View>

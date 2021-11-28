@@ -49,16 +49,16 @@ const App: () => ReactNode = () => {
   );
 };
 
-const RadioIcon = () => (
+const RadioIcon = ({ focused }: { focused: boolean }) => (
   <Image
-    style={styles.radioIcon}
+    style={{ ...styles.radioIcon, ...(!focused ? styles.inactive : '') }}
     source={require('./assets/img/lahmacun-logo.png')}
   />
 );
 
-const ArcsiIcon = () => (
+const ArcsiIcon = ({ focused }: { focused: boolean }) => (
   <Image
-    style={styles.arcsiIcon}
+    style={{ ...styles.arcsiIcon, ...(!focused ? styles.inactive : '') }}
     source={require('./assets/img/vinyl-record.png')}
   />
 );
@@ -68,13 +68,15 @@ const TabBar = () => <View style={styles.tabOptions} />;
 const radioTabOptions: BottomTabNavigationOptions = {
   tabBarIcon: RadioIcon,
   tabBarBackground: TabBar,
-  tabBarActiveTintColor: '#000000'
+  tabBarActiveTintColor: '#000000',
+  tabBarInactiveTintColor: '#606060'
 };
 
 const arcsiTabOptions: BottomTabNavigationOptions = {
   tabBarIcon: ArcsiIcon,
   tabBarBackground: () => <View style={styles.tabOptions} />,
-  tabBarActiveTintColor: '#000000'
+  tabBarActiveTintColor: '#000000',
+  tabBarInactiveTintColor: '#606060'
 };
 
 const styles = StyleSheet.create({
@@ -95,6 +97,9 @@ const styles = StyleSheet.create({
   arcsiIcon: {
     width: 30,
     height: 30
+  },
+  inactive: {
+    tintColor: '#606060'
   },
   tabOptions: {
     backgroundColor: LAHMACUN_PURPLE,

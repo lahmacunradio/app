@@ -1,4 +1,4 @@
-import { Capability, Track } from 'react-native-track-player';
+import { Capability, MetadataOptions, Track } from 'react-native-track-player';
 
 export const LAHMACUN_PURPLE = '#d09cf8';
 
@@ -14,3 +14,15 @@ export const RADIO_CAPABILITIES = [
 ];
 
 export const SHOW_CAPABILITES = [...RADIO_CAPABILITIES, Capability.SeekTo];
+
+export const groupedRadioCapabilities: MetadataOptions = {
+  capabilities: RADIO_CAPABILITIES,
+  notificationCapabilities: RADIO_CAPABILITIES,
+  compactCapabilities: RADIO_CAPABILITIES
+};
+
+export const groupedShowCapabilities: MetadataOptions = {
+  capabilities: SHOW_CAPABILITES,
+  notificationCapabilities: SHOW_CAPABILITES,
+  compactCapabilities: SHOW_CAPABILITES
+};
