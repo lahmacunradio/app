@@ -1,34 +1,41 @@
 import { useState } from 'react';
+import TrackPlayer from 'react-native-track-player';
 import { PLAYING_STATES } from '../Player/types';
 import { UseShowEpisodeProps } from './types';
 
 export const useShowEpisode = (props: UseShowEpisodeProps) => {
   const { canonizedCoverUrl, id, name, showName, handlePlay, loadTrack } =
     props;
-  const [url, setUrl] = useState<string>();
+  const [url, setUrl] = useState<string>('');
 
   const onPlayClick = async () => {
-    if (!url) {
-      const resp = await fetch(
-        `https://arcsi.lahmacun.hu/arcsi/item/${encodeURIComponent(id)}/listen`
-      );
-      try {
-        const showUrl: string = await resp.text();
-        setUrl(showUrl);
+    try {
+      if (!url) {
+        const response = await fetch(
+          `https://arcsi.lahmacun.hu/arcsi/item/${encodeURIComponent(
+            id
+          )}/listen`
+        );
+        const responseBody: string = await response.text();
+        setUrl(responseBody);
+        await TrackPlayer.stop();
+        await TrackPlayer.removeUpcomingTracks();
+        await TrackPlayer.reset();
         await loadTrack({
-          url: showUrl,
+          url: responseBody,
           artist: showName,
           title: name,
           artwork: canonizedCoverUrl
         });
-        await handlePlay(PLAYING_STATES.STATE_SHOW);
-      } catch (e) {
-        console.log('episode error: ', e);
       }
+      await handlePlay(PLAYING_STATES.STATE_SHOW);
+    } catch (e) {
+      console.log('episode error: ', e);
     }
   };
 
   return {
-    onPlayClick
+    onPlayClick,
+    url
   };
 };

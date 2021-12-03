@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Player } from '../Player/player';
 import { useTrackPlayer } from '../Player/useTrackPlayer';
 export const Home = () => {
@@ -8,7 +8,7 @@ export const Home = () => {
 
   // TODO: upcoming shows
   return (
-    <View style={styles.homeWrapper}>
+    <ScrollView contentContainerStyle={styles.homeWrapper}>
       <View style={styles.playerWrapper}>
         <Player {...{ isPlaying, handlePlay, loadTrack }} />
       </View>
@@ -21,7 +21,7 @@ export const Home = () => {
             }>{`${nowPlayingMetadata?.now_playing.song.artist} - ${nowPlayingMetadata?.now_playing.song.title}`}</Text>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   },
   nowPlayingContent: {
     fontFamily: 'Rubik',
-    fontSize: 24
+    margin: 15,
+    fontSize: 20
   }
 });

@@ -2,8 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import TrackPlayer, {
   Track,
   useTrackPlayerEvents,
-  Event,
-  State
+  Event
 } from 'react-native-track-player';
 import {
   DEFAULT_TRACK,
@@ -12,6 +11,7 @@ import {
 } from '../../util/constants';
 import { NowPlayingMetadata, NowPlayingState, PLAYING_STATES } from './types';
 import { delay } from '../../util/delay';
+import { isStatePlaying } from '../../util/isStatePlaying';
 
 export const useTrackPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -91,13 +91,7 @@ export const useTrackPlayer = () => {
     await delay(1000);
     const state = await TrackPlayer.getState();
     // TODO: playing states may differ between platforms?
-    setIsPlaying(
-      (state as unknown) === State.Playing ||
-        (state as unknown) === State.Buffering ||
-        (state as unknown) === 'loading' ||
-        (state as unknown) === 'buffering' ||
-        (state as unknown) === State.Connecting
-    );
+    setIsPlaying(isStatePlaying(state));
   }, [setIsPlaying]);
 
   const handlePlay = useCallback(
@@ -185,6 +179,7 @@ export const useTrackPlayer = () => {
     handlePlay,
     setIsPlaying,
     loadTrack,
-    nowPlayingMetadata
+    nowPlayingMetadata,
+    resetPlayer
   };
 };
