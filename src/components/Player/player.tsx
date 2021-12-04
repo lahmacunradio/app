@@ -34,21 +34,23 @@ export const Player: React.FC<PlayerProps> = (
         await loadTrack();
         await handlePlay(PLAYING_STATES.STATE_RADIO);
       }}>
-      <Image
-        source={require('../../../assets/img/dj-citrom-web.png')}
-        style={styles.djcitrom}
-      />
+      <Image source={image} defaultSource={image} style={styles.djcitrom} />
     </TouchableOpacity>
   );
 };
 
+const image = require('../../../assets/img/dj-citrom-web.png');
+
 const styles = StyleSheet.create({
   button: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 250,
+    height: 250 * 1.572
   },
   djcitrom: {
-    width: 350,
-    height: 550
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover'
   }
 });

@@ -15,6 +15,7 @@ export const ArcsiItem = (props: ShowItemProps) => {
       width: width,
       height: width,
       maxHeight: 300,
+      maxWidth: 500,
       overflow: 'hidden'
     },
     showItem: {
@@ -22,7 +23,8 @@ export const ArcsiItem = (props: ShowItemProps) => {
       flexDirection: 'column',
       justifyContent: 'center',
       marginBottom: 25,
-      paddingHorizontal: '15%'
+      paddingHorizontal: '15%',
+      maxWidth: 500
     },
     showName: {
       maxWidth: width,

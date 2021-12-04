@@ -1,4 +1,4 @@
-package com.lahmacunfm;
+package com.lahmacunradio;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;

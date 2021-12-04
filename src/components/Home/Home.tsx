@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Platform } from 'react-native';
 import { Player } from '../Player/player';
 import { useTrackPlayer } from '../Player/useTrackPlayer';
 export const Home = () => {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     marginTop: 15
   },
   nowPlayingText: {
-    fontFamily: 'RoyalInferno',
+    fontFamily: Platform.OS === 'android' ? 'Royal-Inferno' : 'RoyalInferno',
     fontSize: 56
   },
   nowPlayingContent: {

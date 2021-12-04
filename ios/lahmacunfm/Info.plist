@@ -36,7 +36,14 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Rubik-Bold.ttf</string>
+		<string>Rubik-Medium.ttf</string>
+		<string>Rubik-Regular.ttf</string>
+		<string>Royal-Inferno.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
@@ -55,12 +62,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Rubik-Bold.ttf</string>
-		<string>Rubik-Medium.ttf</string>
-		<string>Rubik-Regular.ttf</string>
-		<string>Royal-Inferno.ttf</string>
-	</array>
 </dict>
 </plist>
