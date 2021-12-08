@@ -13,21 +13,21 @@ export const ArcsiItem = (props: ShowItemProps) => {
   const styles = StyleSheet.create({
     coverImage: {
       width: width,
-      height: width,
-      maxHeight: 300,
+      height: Math.min(width, 300),
+      maxHeight: 600,
       maxWidth: 500,
-      overflow: 'hidden'
+      alignSelf: 'center'
     },
     showItem: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       marginBottom: 25,
-      paddingHorizontal: '15%',
+      marginHorizontal: '15%',
       maxWidth: 500
     },
     showName: {
-      maxWidth: width,
+      maxWidth: 500,
       flexWrap: 'wrap',
       backgroundColor: 'white',
       fontWeight: 'bold',
@@ -50,24 +50,22 @@ export const ArcsiItem = (props: ShowItemProps) => {
   );
 
   return (
-    <View style={styles.showItem}>
-      <TouchableNativeFeedback
-        onPress={() => props.nav.navigate('Shows', { show })}>
-        <View>
-          <Image
-            style={styles.coverImage}
-            source={{
-              uri: show.cover_image_url
-            }}
-          />
-          <View style={styles.showDetails}>
-            <Text style={styles.showName} adjustsFontSizeToFit>
-              {show.name}
-            </Text>
-            <Text>{showDescription}</Text>
-          </View>
+    <TouchableNativeFeedback
+      onPress={() => props.nav.navigate('Shows', { show })}>
+      <View style={styles.showItem}>
+        <Image
+          style={styles.coverImage}
+          source={{
+            uri: show.cover_image_url
+          }}
+        />
+        <View style={styles.showDetails}>
+          <Text style={styles.showName} adjustsFontSizeToFit>
+            {show.name}
+          </Text>
+          <Text>{showDescription}</Text>
         </View>
-      </TouchableNativeFeedback>
-    </View>
+      </View>
+    </TouchableNativeFeedback>
   );
 };

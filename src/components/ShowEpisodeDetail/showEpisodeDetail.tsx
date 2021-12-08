@@ -65,10 +65,12 @@ export const ShowEpisodeDetail = (
       <View style={styles.content}>
         <Image source={{ uri: url }} style={styles.coverImage} />
         <Text style={styles.episodeDescription}>{description}</Text>
-        <Button
-          title={isPlaying ? 'Pause Episode' : 'Play Episode'}
-          onPress={async () => await onPlayClick()}
-        />
+        <View style={styles.playButton}>
+          <Button
+            title={isPlaying ? 'Pause Episode' : 'Play Episode'}
+            onPress={async () => await onPlayClick()}
+          />
+        </View>
       </View>
     </ScrollView>
   );
@@ -92,5 +94,8 @@ const styles = StyleSheet.create({
   },
   episodeDescription: {
     marginTop: 15
+  },
+  playButton: {
+    marginVertical: 15
   }
 });

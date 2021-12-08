@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View
+} from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../types/routeTypes';
 import { ShowEpisode } from '../ShowEpisode';
@@ -9,6 +16,23 @@ export const ShowDetail = (
   props: NativeStackScreenProps<StackParamList, 'Shows'>
 ) => {
   const { cover_image_url, description, name, items } = props.route.params.show;
+
+  const { width } = useWindowDimensions();
+
+  const coverImageStyle: StyleSheet.NamedStyles<any> = {
+    coverImage: {
+      width: width - 60,
+      maxWidth: 500,
+      height: 360,
+      marginTop: 25,
+      alignSelf: 'center'
+    }
+  };
+
+  const styles = StyleSheet.create({
+    ...otherStyles,
+    ...coverImageStyle
+  });
 
   useEffect(() => {
     props.navigation.setOptions({ title: name });
@@ -49,7 +73,7 @@ export const ShowDetail = (
   );
 };
 
-const styles = StyleSheet.create({
+const otherStyles: StyleSheet.NamedStyles<any> = {
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -61,13 +85,6 @@ const styles = StyleSheet.create({
   content: {
     width: '90%',
     marginHorizontal: 'auto'
-  },
-  coverImage: {
-    width: 360,
-    maxWidth: 360,
-    height: 360,
-    marginTop: 25,
-    alignSelf: 'center'
   },
   showName: {
     fontWeight: '700',
@@ -97,4 +114,4 @@ const styles = StyleSheet.create({
   episodeContent: {
     marginTop: 30
   }
-});
+};
