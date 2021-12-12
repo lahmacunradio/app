@@ -1,8 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import {
+  FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -18,21 +18,32 @@ export const Arcsi = (props: NativeStackScreenProps<any>) => {
 
   return (
     <View style={styles.wrapper}>
-      <ScrollView contentContainerStyle={styles.showItemWrapper}>
-        <Text style={styles.title}>Lahmacun Shows</Text>
-        {(isLoading || !shows) && (
-          <Image source={require('../../../assets/img/spinner.gif')} />
+      <FlatList
+        contentContainerStyle={styles.showItemWrapper}
+        data={shows}
+        renderItem={({ item, index }) => (
+          <ArcsiItem
+            key={index}
+            show={item}
+            width={width - 60}
+            nav={navigation}
+          />
         )}
-        {shows &&
-          shows.map((show, index) => (
-            <ArcsiItem
-              key={index}
-              show={show}
-              width={width - 60}
-              nav={navigation}
-            />
-          ))}
-      </ScrollView>
+        ListHeaderComponent={
+          isLoading || !shows ? (
+            <Image source={require('../../../assets/img/spinner.gif')} />
+          ) : (
+            <Text style={styles.title}>Lahmacun Shows</Text>
+          )
+        }
+        horizontal={false}
+        showsHorizontalScrollIndicator={false}
+        removeClippedSubviews={true}
+        initialNumToRender={3}
+        maxToRenderPerBatch={1}
+        updateCellsBatchingPeriod={100}
+        windowSize={5}
+      />
     </View>
   );
 };
@@ -44,7 +55,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 42,
     textAlign: 'center',
-    marginTop: '10%'
+    marginTop: 50
   },
   showItemWrapper: {
     display: 'flex',

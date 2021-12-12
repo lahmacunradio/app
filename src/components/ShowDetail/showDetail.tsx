@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import {
+  FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -23,7 +23,7 @@ export const ShowDetail = (
     coverImage: {
       width: width - 60,
       maxWidth: 500,
-      height: 360,
+      height: 300,
       marginTop: 25,
       alignSelf: 'center'
     }
@@ -54,22 +54,30 @@ export const ShowDetail = (
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.wrapper}>
-      <View style={styles.content}>
-        <Image style={styles.coverImage} source={{ uri: cover_image_url }} />
-        <Text style={styles.showName}>{name}</Text>
-        <Text style={styles.showDescription}>{description}</Text>
-        <Text style={styles.arcsived}>Arcsived Shows</Text>
-        <View style={styles.separator} />
-        <View style={styles.episodeWrapper}>
-          {orderedItems.map((item, index) => (
-            <View style={styles.episodeContent} key={index}>
-              <ShowEpisode item={item} show={props.route.params.show} />
-            </View>
-          ))}
+    <FlatList
+      contentContainerStyle={styles.wrapper}
+      data={orderedItems}
+      renderItem={({ item, index }) => (
+        <ShowEpisode item={item} show={props.route.params.show} key={index} />
+      )}
+      horizontal={false}
+      showsHorizontalScrollIndicator={false}
+      removeClippedSubviews={true}
+      initialNumToRender={3}
+      maxToRenderPerBatch={1}
+      updateCellsBatchingPeriod={100}
+      windowSize={5}
+      ListHeaderComponent={
+        <View>
+          <Image style={styles.coverImage} source={{ uri: cover_image_url }} />
+          <Text style={styles.showName}>{name}</Text>
+          <Text style={styles.showDescription}>{description}</Text>
+          <Text style={styles.arcsived}>Arcsived Shows</Text>
+          <View style={styles.separator} />
         </View>
-      </View>
-    </ScrollView>
+      }
+      ListHeaderComponentStyle={styles.content}
+    />
   );
 };
 
@@ -110,8 +118,5 @@ const otherStyles: StyleSheet.NamedStyles<any> = {
     justifyContent: 'center',
     width: '100%',
     marginTop: 20
-  },
-  episodeContent: {
-    marginTop: 30
   }
 };

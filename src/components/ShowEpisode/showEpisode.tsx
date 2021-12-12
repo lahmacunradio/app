@@ -46,12 +46,14 @@ const styles = StyleSheet.create({
   wrapper: {
     display: 'flex',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    maxWidth: 300
   },
   coverImage: {
-    width: 360,
-    height: 360,
-    alignSelf: 'center'
+    width: 300,
+    height: 300,
+    alignSelf: 'center',
+    marginTop: 30
   },
   contentWrapper: {
     display: 'flex',
@@ -60,7 +62,8 @@ const styles = StyleSheet.create({
   episodeName: {
     fontSize: 18,
     marginTop: 15,
-    fontWeight: '500'
+    fontWeight: '500',
+    maxWidth: 300
   },
   episodeDescription: {
     marginTop: 5,
