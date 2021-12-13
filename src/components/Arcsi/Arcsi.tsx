@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   FlatList,
   Image,
@@ -15,12 +15,26 @@ export const Arcsi = (props: NativeStackScreenProps<any>) => {
   const { data: shows, isLoading } = useArcsi();
   const { width } = useWindowDimensions();
   const { navigation } = props;
+  const orderedShows = useMemo(() => {
+    if (!shows) {
+      return [];
+    }
+    return shows.sort((a, b) => {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return -1;
+      }
+      return 0;
+    });
+  }, [shows]);
 
   return (
     <View style={styles.wrapper}>
       <FlatList
         contentContainerStyle={styles.showItemWrapper}
-        data={shows}
+        data={orderedShows}
         renderItem={({ item, index }) => (
           <ArcsiItem
             key={index}

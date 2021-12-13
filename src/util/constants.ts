@@ -3,8 +3,7 @@ import { Capability, MetadataOptions, Track } from 'react-native-track-player';
 export const LAHMACUN_PURPLE = '#d09cf8';
 
 export const DEFAULT_TRACK: Track = {
-  url: 'https://streaming.lahmacun.hu/radio/8000/radio.mp3',
-  duration: 0
+  url: 'https://streaming.lahmacun.hu/radio/8000/radio.mp3'
 };
 
 export const RADIO_CAPABILITIES = [

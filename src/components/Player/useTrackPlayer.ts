@@ -88,7 +88,7 @@ export const useTrackPlayer = () => {
   }, []);
 
   const setState = useCallback(async () => {
-    await delay(1000);
+    await delay(500);
     const state = await TrackPlayer.getState();
     // TODO: playing states may differ between platforms?
     setIsPlaying(isStatePlaying(state));
@@ -100,12 +100,15 @@ export const useTrackPlayer = () => {
         await fetchNowPlayingMetadata();
         if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_RADIO) {
           console.log('radio reset');
-          await resetPlayer();
+          await TrackPlayer.pause();
         } else if (isPlaying && nowPlayingState === PLAYING_STATES.STATE_SHOW) {
           console.log('pause');
           await TrackPlayer.pause();
         } else {
           console.log('play');
+          if (nowPlayingState === PLAYING_STATES.STATE_RADIO) {
+            await loadTrack();
+          }
           await TrackPlayer.play();
         }
         await setState();
@@ -113,7 +116,7 @@ export const useTrackPlayer = () => {
         console.log(e);
       }
     },
-    [isPlaying, resetPlayer, setState]
+    [isPlaying, loadTrack, setState]
   );
 
   const fetchNowPlayingMetadata = async () => {
@@ -140,6 +143,14 @@ export const useTrackPlayer = () => {
     get();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      await fetchNowPlayingMetadata();
+    }, 60000);
+
+    return () => clearInterval(interval);
+  });
+
   const handleRemoteEvent = useCallback(
     async (
       event: { [key: string]: any; type: Event },
@@ -152,14 +163,13 @@ export const useTrackPlayer = () => {
 
       if (event.type === Event.RemotePause) {
         if (state === PLAYING_STATES.STATE_RADIO) {
-          await resetPlayer();
+          await TrackPlayer.pause();
         } else if (state === PLAYING_STATES.STATE_SHOW) {
           await TrackPlayer.pause();
         }
       }
       if (event.type === Event.RemotePlay) {
         if (state === PLAYING_STATES.STATE_RADIO) {
-          await resetPlayer();
           await loadTrack();
         }
         await TrackPlayer.play();
