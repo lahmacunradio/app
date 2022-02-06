@@ -2,9 +2,9 @@ export interface Show {
   id: number;
   active: boolean;
   archive_lahmastore: boolean;
-  archive_ahmastore_base_url: boolean;
+  archive_lahmastore_base_url: string;
   archive_mixcloud: boolean;
-  archive_mixcloud_base_url: boolean;
+  archive_mixcloud_base_url: string;
   cover_image_url: string;
   day: number;
   description: string;
