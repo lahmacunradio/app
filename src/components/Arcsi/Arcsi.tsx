@@ -19,7 +19,11 @@ export const Arcsi = (props: NativeStackScreenProps<any>) => {
     if (!shows) {
       return [];
     }
-    return shows.sort((a, b) => a.name.localeCompare(b.name, 'hu'));
+    return shows
+      .filter(item => item.items?.length > 0)
+      .sort((a, b) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'hu')
+      );
   }, [shows]);
 
   return (
