@@ -40,8 +40,16 @@ export const ShowDetail = (
 
   const orderedItems = useMemo(() => {
     const availableItems = items.filter(item => {
-      const playDate = new Date(item.play_date);
-      return item.archived && playDate < new Date();
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = (d.getMonth() + 1).toLocaleString('en-US', {
+        minimumIntegerDigits: 2
+      });
+      const day = d
+        .getDate()
+        .toLocaleString('en-US', { minimumIntegerDigits: 2 });
+      const today = `${year}-${month}-${day}`;
+      return item.archived && item.play_date < today;
     });
     return availableItems.sort((a, b) => {
       const dateA = new Date(a.play_date).getTime();
