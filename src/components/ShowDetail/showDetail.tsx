@@ -38,20 +38,30 @@ export const ShowDetail = (
     props.navigation.setOptions({ title: name });
   }, [name, props.navigation, items]);
 
-  const orderedItems = useMemo(
-    () =>
-      items.sort((a, b) => {
-        const dateA = new Date(a.play_date).getTime();
-        const dateB = new Date(b.play_date).getTime();
-        if (dateA < dateB) {
-          return 1;
-        } else if (dateA > dateB) {
-          return -1;
-        }
-        return 0;
-      }),
-    [items]
-  );
+  const orderedItems = useMemo(() => {
+    const availableItems = items.filter(item => {
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = (d.getMonth() + 1).toLocaleString('en-US', {
+        minimumIntegerDigits: 2
+      });
+      const day = d
+        .getDate()
+        .toLocaleString('en-US', { minimumIntegerDigits: 2 });
+      const today = `${year}-${month}-${day}`;
+      return item.archived && item.play_date < today;
+    });
+    return availableItems.sort((a, b) => {
+      const dateA = new Date(a.play_date).getTime();
+      const dateB = new Date(b.play_date).getTime();
+      if (dateA < dateB) {
+        return 1;
+      } else if (dateA > dateB) {
+        return -1;
+      }
+      return 0;
+    });
+  }, [items]);
 
   return (
     <FlatList
