@@ -129,7 +129,7 @@ android {
         applicationId "com.lahmacunradio"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
+        versionCode 12
         versionName "1.0.7"
     }
     splits {

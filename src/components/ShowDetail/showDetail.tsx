@@ -41,14 +41,7 @@ export const ShowDetail = (
   const orderedItems = useMemo(() => {
     const availableItems = items.filter(item => {
       const d = new Date();
-      const year = d.getFullYear();
-      const month = (d.getMonth() + 1).toLocaleString('en-US', {
-        minimumIntegerDigits: 2
-      });
-      const day = d
-        .getDate()
-        .toLocaleString('en-US', { minimumIntegerDigits: 2 });
-      const today = `${year}-${month}-${day}`;
+      const today = d.toISOString().split('T')[0];
       return item.archived && item.play_date < today;
     });
     return availableItems.sort((a, b) => {
