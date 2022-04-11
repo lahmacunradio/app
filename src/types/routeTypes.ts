@@ -1,4 +1,4 @@
-import { Show, ShowItem } from '../components/Arcsi/types';
+import { Show, ShowItem } from '../components/Shows/types';
 
 export type StackParamList = {
   Shows: { show: Show };

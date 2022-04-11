@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { ShowItemProps } from './types';
 
-export const ArcsiItem = (props: ShowItemProps) => {
+export const ShowItem = (props: ShowItemProps) => {
   const { show, width } = props;
   const styles = StyleSheet.create({
     coverImage: {
@@ -51,7 +51,7 @@ export const ArcsiItem = (props: ShowItemProps) => {
 
   return (
     <TouchableNativeFeedback
-      onPress={() => props.nav.navigate('Shows', { show })}>
+      onPress={() => props.nav.navigate('ShowItem', { show })}>
       <View style={styles.showItem}>
         <Image
           style={styles.coverImage}

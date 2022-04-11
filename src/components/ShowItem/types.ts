@@ -1,5 +1,5 @@
 import { NavigationProp } from '@react-navigation/core';
-import { Show } from '../Arcsi/types';
+import { Show } from '../Shows/types';
 
 export interface ShowItemProps {
   width: number | 152;

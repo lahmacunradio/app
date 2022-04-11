@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { Show } from './types';
 
-export const useArcsi = () => {
+export const useShows = () => {
   const { data, isLoading, error } = useQuery(
     'getShows',
     async () => {

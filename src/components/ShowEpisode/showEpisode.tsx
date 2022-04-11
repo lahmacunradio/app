@@ -7,7 +7,7 @@ import {
   TouchableNativeFeedback,
   View
 } from 'react-native';
-import { Show, ShowItem } from '../Arcsi/types';
+import { Show, ShowItem } from '../Shows/types';
 
 export const ShowEpisode = (
   props: PropsWithChildren<{ item: ShowItem; show: Show }>

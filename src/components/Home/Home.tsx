@@ -6,7 +6,6 @@ export const Home = () => {
   const { isPlaying, handlePlay, loadTrack, nowPlayingMetadata } =
     useTrackPlayer();
 
-  // TODO: upcoming shows
   return (
     <ScrollView contentContainerStyle={styles.homeWrapper}>
       <View style={styles.playerWrapper}>

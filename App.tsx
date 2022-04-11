@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { Home } from './src/components/Home';
-import { Arcsi } from './src/components/Arcsi';
+import { Shows } from './src/components/Shows';
 import { LAHMACUN_PURPLE } from './src/util/constants';
 import { ShowDetail } from './src/components/ShowDetail/showDetail';
 import { ShowEpisodeDetail } from './src/components/ShowEpisodeDetail/showEpisodeDetail';
@@ -24,7 +24,7 @@ const App: () => ReactNode = () => {
       sceneContainerStyle={styles.scrollView}
       screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Radio" component={Home} options={radioTabOptions} />
-      <Tab.Screen name="Arcsi" component={Arcsi} options={arcsiTabOptions} />
+      <Tab.Screen name="Shows" component={Shows} options={showsTabOptions} />
     </Tab.Navigator>
   );
 
@@ -39,7 +39,7 @@ const App: () => ReactNode = () => {
                 component={HomeScreen}
                 options={{ headerShown: false }}
               />
-              <Stack.Screen name="Shows" component={ShowDetail} />
+              <Stack.Screen name="ShowItem" component={ShowDetail} />
               <Stack.Screen name="Episode" component={ShowEpisodeDetail} />
             </Stack.Navigator>
           </View>
@@ -56,9 +56,9 @@ const RadioIcon = ({ focused }: { focused: boolean }) => (
   />
 );
 
-const ArcsiIcon = ({ focused }: { focused: boolean }) => (
+const ShowsIcon = ({ focused }: { focused: boolean }) => (
   <Image
-    style={{ ...styles.arcsiIcon, ...(!focused ? styles.inactive : '') }}
+    style={{ ...styles.showsIcon, ...(!focused ? styles.inactive : '') }}
     source={require('./assets/img/vinyl-record.png')}
   />
 );
@@ -72,8 +72,8 @@ const radioTabOptions: BottomTabNavigationOptions = {
   tabBarInactiveTintColor: '#606060'
 };
 
-const arcsiTabOptions: BottomTabNavigationOptions = {
-  tabBarIcon: ArcsiIcon,
+const showsTabOptions: BottomTabNavigationOptions = {
+  tabBarIcon: ShowsIcon,
   tabBarBackground: () => <View style={styles.tabOptions} />,
   tabBarActiveTintColor: '#000000',
   tabBarInactiveTintColor: '#606060'
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 25
   },
-  arcsiIcon: {
+  showsIcon: {
     width: 30,
     height: 30
   },

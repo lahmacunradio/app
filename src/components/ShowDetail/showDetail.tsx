@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -11,13 +11,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../types/routeTypes';
 import { ShowEpisode } from '../ShowEpisode';
 import { LAHMACUN_PURPLE } from '../../util/constants';
+import { SearchItem } from '../SearchItem';
 
 export const ShowDetail = (
   props: NativeStackScreenProps<StackParamList, 'Shows'>
 ) => {
   const { cover_image_url, description, name, items } = props.route.params.show;
-
   const { width } = useWindowDimensions();
+  const [searchText, setSearchText] = useState<string>('');
 
   const coverImageStyle: StyleSheet.NamedStyles<any> = {
     coverImage: {
@@ -56,10 +57,20 @@ export const ShowDetail = (
     });
   }, [items]);
 
+  const filteredItems = useMemo(() => {
+    if (!orderedItems) {
+      return [];
+    }
+
+    return orderedItems.filter(value =>
+      value.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }, [orderedItems, searchText]);
+
   return (
     <FlatList
       contentContainerStyle={styles.wrapper}
-      data={orderedItems}
+      data={filteredItems}
       renderItem={({ item, index }) => (
         <ShowEpisode item={item} show={props.route.params.show} key={index} />
       )}
@@ -75,8 +86,13 @@ export const ShowDetail = (
           <Image style={styles.coverImage} source={{ uri: cover_image_url }} />
           <Text style={styles.showName}>{name}</Text>
           <Text style={styles.showDescription}>{description}</Text>
-          <Text style={styles.arcsived}>Arcsived Shows</Text>
+          <Text style={styles.showsHeader}>Shows</Text>
           <View style={styles.separator} />
+          <SearchItem
+            value={searchText}
+            setValue={setSearchText}
+            searchFor={'episodes'}
+          />
         </View>
       }
       ListHeaderComponentStyle={styles.content}
@@ -105,7 +121,7 @@ const otherStyles: StyleSheet.NamedStyles<any> = {
   showDescription: {
     marginBottom: 25
   },
-  arcsived: {
+  showsHeader: {
     fontSize: 30,
     fontWeight: '500',
     textAlign: 'center'
