@@ -19,6 +19,8 @@
 		8020123B5A824420896AD45E /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 792D2575F9384C049A594441 /* Rubik-Medium.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8960DE55635546D7AC5A4CCE /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F8119B6ED7A74A11B8044990 /* Rubik-Bold.ttf */; };
+		8C3A00E3DDBF5463AEF007D3 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6200F841DBC41112C790C0 /* ExpoModulesProvider.swift */; };
+		BBA7661D248EC03D987A3000 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46088FE12068231068E1C10C /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +44,9 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = lahmacunfm/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = lahmacunfm/main.m; sourceTree = "<group>"; };
 		41784B66D087AF6AB16FBAF4 /* Pods-lahmacunfm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lahmacunfm.debug.xcconfig"; path = "Target Support Files/Pods-lahmacunfm/Pods-lahmacunfm.debug.xcconfig"; sourceTree = "<group>"; };
+		46088FE12068231068E1C10C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-lahmacunfm-lahmacunfmTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		4B95747B523D405CB28B4D77 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Regular.ttf"; path = "../assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; };
+		4C6200F841DBC41112C790C0 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-lahmacunfm/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		59864E71999C495414BA3023 /* Pods-lahmacunfm-lahmacunfmTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lahmacunfm-lahmacunfmTests.release.xcconfig"; path = "Target Support Files/Pods-lahmacunfm-lahmacunfmTests/Pods-lahmacunfm-lahmacunfmTests.release.xcconfig"; sourceTree = "<group>"; };
 		66B91F7F2700F74F00E9EBBD /* lahmacunfm-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "lahmacunfm-Bridging-Header.h"; sourceTree = "<group>"; };
 		66B91F802700F75000E9EBBD /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				971CB95412F574EC6C8F377C /* Pods */,
 				1582482664574FF984696D15 /* Resources */,
+				C1CC77A24FD0A9B3371BC2B4 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -171,6 +176,31 @@
 				59864E71999C495414BA3023 /* Pods-lahmacunfm-lahmacunfmTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A0F675F883062C463A772A92 /* lahmacunfmTests */ = {
+			isa = PBXGroup;
+			children = (
+				46088FE12068231068E1C10C /* ExpoModulesProvider.swift */,
+			);
+			name = lahmacunfmTests;
+			sourceTree = "<group>";
+		};
+		C1CC77A24FD0A9B3371BC2B4 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				E5A8CFCADBD389AD1944048D /* lahmacunfm */,
+				A0F675F883062C463A772A92 /* lahmacunfmTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		E5A8CFCADBD389AD1944048D /* lahmacunfm */ = {
+			isa = PBXGroup;
+			children = (
+				4C6200F841DBC41112C790C0 /* ExpoModulesProvider.swift */,
+			);
+			name = lahmacunfm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* lahmacunfmTests.m in Sources */,
+				BBA7661D248EC03D987A3000 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +437,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				66B91F812700F75000E9EBBD /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				8C3A00E3DDBF5463AEF007D3 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,7 +463,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = lahmacunfmTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,7 +488,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = lahmacunfmTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -580,7 +612,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -638,7 +670,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
