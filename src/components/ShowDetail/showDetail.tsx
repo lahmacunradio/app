@@ -12,6 +12,7 @@ import { StackParamList } from '../../types/routeTypes';
 import { ShowEpisode } from '../ShowEpisode';
 import { LAHMACUN_PURPLE } from '../../util/constants';
 import { SearchItem } from '../SearchItem';
+import RenderHtml from 'react-native-render-html';
 
 export const ShowDetail = (
   props: NativeStackScreenProps<StackParamList, 'Shows'>
@@ -85,8 +86,10 @@ export const ShowDetail = (
         <View>
           <Image style={styles.coverImage} source={{ uri: cover_image_url }} />
           <Text style={styles.showName}>{name}</Text>
-          <Text style={styles.showDescription}>{description}</Text>
-          <Text style={styles.showsHeader}>Shows</Text>
+          <Text style={styles.showDescription}>
+            <RenderHtml source={{ html: description }} contentWidth={width} />
+          </Text>
+          <Text style={styles.arcsived}>Episodes</Text>
           <View style={styles.separator} />
           <SearchItem
             value={searchText}

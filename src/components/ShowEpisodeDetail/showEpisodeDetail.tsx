@@ -7,13 +7,15 @@ import {
   StyleSheet,
   Image,
   View,
-  Button
+  Button,
+  useWindowDimensions
 } from 'react-native';
 import { StackParamList } from '../../types/routeTypes';
 import { useShowEpisode } from '../ShowEpisode/useShowEpisode';
 import { useTrackPlayer } from '../Player/useTrackPlayer';
 import TrackPlayer from 'react-native-track-player';
 import { isStatePlaying } from '../../util/isStatePlaying';
+import RenderHtml from 'react-native-render-html';
 
 export const ShowEpisodeDetail = (
   props: NativeStackScreenProps<StackParamList, 'Episode'>
@@ -25,6 +27,8 @@ export const ShowEpisodeDetail = (
   } = props.route.params;
 
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const { width } = useWindowDimensions();
 
   const { loadTrack, handlePlay } = useTrackPlayer();
 
@@ -64,7 +68,9 @@ export const ShowEpisodeDetail = (
     <ScrollView style={styles.wrapper}>
       <View style={styles.content}>
         <Image source={{ uri: url }} style={styles.coverImage} />
-        <Text style={styles.episodeDescription}>{description}</Text>
+        <Text style={styles.episodeDescription}>
+          <RenderHtml source={{ html: description }} contentWidth={width} />
+        </Text>
         <View style={styles.playButton}>
           <Button
             title={isPlaying ? 'Pause Episode' : 'Play Episode'}
