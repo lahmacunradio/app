@@ -2,12 +2,12 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useMemo, useState } from 'react';
 import {
   Image,
-  SectionList,
   StyleSheet,
   Text,
   useWindowDimensions,
   View
 } from 'react-native';
+import { KeyboardAwareSectionList } from 'react-native-keyboard-aware-scroll-view';
 import { ShowItem } from '../ShowItem/ShowItem';
 import { useShows } from './useShows';
 import { SearchItem } from '../SearchItem';
@@ -62,7 +62,7 @@ export const Shows = (props: NativeStackScreenProps<any>) => {
 
   return (
     <View style={styles.wrapper}>
-      <SectionList
+      <KeyboardAwareSectionList
         sections={sections}
         contentContainerStyle={styles.showItemWrapper}
         renderItem={({ item, index }) => (
