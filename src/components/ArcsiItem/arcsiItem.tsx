@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native';
 import { ShowItemProps } from './types';
+import RenderHtml from 'react-native-render-html';
 
 export const ArcsiItem = (props: ShowItemProps) => {
   const { show, width } = props;
@@ -63,7 +64,11 @@ export const ArcsiItem = (props: ShowItemProps) => {
           <Text style={styles.showName} adjustsFontSizeToFit>
             {show.name}
           </Text>
-          <Text>{showDescription}</Text>
+          <RenderHtml
+            source={{ html: showDescription }}
+            contentWidth={width}
+            enableUserAgentStyles={false}
+          />
         </View>
       </View>
     </TouchableNativeFeedback>
