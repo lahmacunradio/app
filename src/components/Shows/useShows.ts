@@ -6,7 +6,6 @@ export const useShows = () => {
   const { data, isLoading, error } = useQuery(
     'getShows',
     async () => {
-      console.log(config);
       try {
         const resp = await fetch('https://arcsi.lahmacun.hu/arcsi/show/all', {
           headers: {
