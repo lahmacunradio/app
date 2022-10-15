@@ -12,7 +12,6 @@ import {
 
 export const Donate = () => {
   const { width } = useWindowDimensions();
-  console.log(width);
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity
