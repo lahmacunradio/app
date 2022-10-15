@@ -15,14 +15,14 @@
     "@react-navigation/native-stack": "^6.2.2",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "react": "17.0.2",
-    "react-native": "0.65.1",
+    "react": "18.1.0",
+    "react-native": "0.70.2",
     "react-native-eject": "^0.1.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
-    "react-native-track-player": "^2.1.2",
+    "react-native-track-player": "^3.2.0",
     "react-query": "^3.24.5"
   },
   "devDependencies": {
