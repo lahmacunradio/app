@@ -13,6 +13,7 @@ import { Shows } from './src/components/Shows';
 import { LAHMACUN_PURPLE } from './src/util/constants';
 import { ShowDetail } from './src/components/ShowDetail/showDetail';
 import { ShowEpisodeDetail } from './src/components/ShowEpisodeDetail/showEpisodeDetail';
+import { Donate } from './src/components/Donate/Donate';
 
 const App: () => ReactNode = () => {
   const Tab = createBottomTabNavigator();
@@ -25,6 +26,7 @@ const App: () => ReactNode = () => {
       screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Radio" component={Home} options={radioTabOptions} />
       <Tab.Screen name="Shows" component={Shows} options={showsTabOptions} />
+      <Tab.Screen name="Donate" component={Donate} options={donateTabOptions} />
     </Tab.Navigator>
   );
 
@@ -63,6 +65,13 @@ const ShowsIcon = ({ focused }: { focused: boolean }) => (
   />
 );
 
+const DonateIcon = ({ focused }: { focused: boolean }) => (
+  <Image
+    style={{ ...styles.donateIcon, ...(!focused ? styles.inactive : '') }}
+    source={require('./assets/img/money.png')}
+  />
+);
+
 const TabBar = () => <View style={styles.tabOptions} />;
 
 const radioTabOptions: BottomTabNavigationOptions = {
@@ -74,7 +83,14 @@ const radioTabOptions: BottomTabNavigationOptions = {
 
 const showsTabOptions: BottomTabNavigationOptions = {
   tabBarIcon: ShowsIcon,
-  tabBarBackground: () => <View style={styles.tabOptions} />,
+  tabBarBackground: TabBar,
+  tabBarActiveTintColor: '#000000',
+  tabBarInactiveTintColor: '#606060'
+};
+
+const donateTabOptions: BottomTabNavigationOptions = {
+  tabBarIcon: DonateIcon,
+  tabBarBackground: TabBar,
   tabBarActiveTintColor: '#000000',
   tabBarInactiveTintColor: '#606060'
 };
@@ -95,6 +111,10 @@ const styles = StyleSheet.create({
     height: 25
   },
   showsIcon: {
+    width: 30,
+    height: 30
+  },
+  donateIcon: {
     width: 30,
     height: 30
   },

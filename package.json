@@ -17,6 +17,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "react": "17.0.2",
     "react-native": "0.65.1",
+    "react-native-config": "^1.4.11",
     "react-native-eject": "^0.1.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-render-html": "^6.3.4",

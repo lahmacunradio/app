@@ -13,6 +13,7 @@ export interface NowPlayingMetadata {
       artist: string;
       title: string;
     };
+    playlist: string;
   };
   playing_next: {
     song: {
