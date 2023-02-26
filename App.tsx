@@ -41,7 +41,7 @@ const App: () => ReactNode = () => {
                 component={HomeScreen}
                 options={{ headerShown: false }}
               />
-              <Stack.Screen name="ShowItem" component={ShowDetail} />
+              <Stack.Screen name="ShowDetail" component={ShowDetail} />
               <Stack.Screen name="Episode" component={ShowEpisodeDetail} />
             </Stack.Navigator>
           </View>

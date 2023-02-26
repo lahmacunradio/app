@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import {
   FlatList,
   Image,
@@ -12,12 +12,17 @@ import { StackParamList } from '../../types/routeTypes';
 import { ShowEpisode } from '../ShowEpisode';
 import { LAHMACUN_PURPLE } from '../../util/constants';
 import RenderHtml from 'react-native-render-html';
+import { useShowDetail } from './useShowDetail';
 
 export const ShowDetail = (
   props: NativeStackScreenProps<StackParamList, 'Shows'>
 ) => {
-  const { cover_image_url, description, name, items } = props.route.params.show;
+  const { cover_image_url, description, name, archive_lahmastore_base_url } =
+    props.route.params.show;
   const { width } = useWindowDimensions();
+  const { items } = useShowDetail({
+    showBaseUrl: archive_lahmastore_base_url
+  });
 
   const coverImageStyle: StyleSheet.NamedStyles<any> = {
     coverImage: {
@@ -38,28 +43,10 @@ export const ShowDetail = (
     props.navigation.setOptions({ title: name });
   }, [name, props.navigation, items]);
 
-  const orderedItems = useMemo(() => {
-    const availableItems = items.filter(item => {
-      const d = new Date();
-      const today = d.toISOString().split('T')[0];
-      return item.archived && item.play_date < today;
-    });
-    return availableItems.sort((a, b) => {
-      const dateA = new Date(a.play_date).getTime();
-      const dateB = new Date(b.play_date).getTime();
-      if (dateA < dateB) {
-        return 1;
-      } else if (dateA > dateB) {
-        return -1;
-      }
-      return 0;
-    });
-  }, [items]);
-
   return (
     <FlatList
       contentContainerStyle={styles.wrapper}
-      data={orderedItems}
+      data={items}
       renderItem={({ item, index }) => (
         <ShowEpisode item={item} show={props.route.params.show} key={index} />
       )}
