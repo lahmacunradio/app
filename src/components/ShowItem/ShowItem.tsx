@@ -52,7 +52,7 @@ export const ShowItem = (props: ShowItemProps) => {
 
   return (
     <TouchableNativeFeedback
-      onPress={() => props.nav.navigate('ShowItem', { show })}>
+      onPress={() => props.nav.navigate('ShowDetail', { show })}>
       <View style={styles.showItem}>
         <Image
           style={styles.coverImage}
